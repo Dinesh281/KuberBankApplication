@@ -44,55 +44,77 @@ namespace KuberBankApplication
         }
         public void UpdateUser()
         {
-            User u = new User();
-            Console.WriteLine("Enter user id for Update");
-            u.UserId = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Eenter User Name to Update");
-            u.UserName = Console.ReadLine();
-            Console.WriteLine("Enter Password to UPdate");
-            u.UserPassword = Console.ReadLine();
-            Console.WriteLine("Enter User Role to Update");
-            Console.WriteLine("1. Admin\n2. Customer");
-            int ur = Convert.ToInt32(Console.ReadLine());
-            if (ur == 1)
+            try
             {
-                u.UserRole = UserRole.Admin;
-            }
-            else if (ur == 2)
-            {
-                u.UserRole = UserRole.Customer;
-            }
-            foreach (User item in userlist)
-            {
-                if (item.UserId == u.UserId)
+                User u = new User();
+                Console.WriteLine("Enter user id for Update");
+                u.UserId = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Eenter User Name to Update");
+                u.UserName = Console.ReadLine();
+                Console.WriteLine("Enter Password to UPdate");
+                u.UserPassword = Console.ReadLine();
+                Console.WriteLine("Enter User Role to Update");
+                Console.WriteLine("1. Admin\n2. Customer");
+                int ur = Convert.ToInt32(Console.ReadLine());
+                if (ur == 1)
                 {
-                    item.UserName = u.UserName;
-                    item.UserPassword = u.UserPassword;
-                    item.UserRole = u.UserRole;
+                    u.UserRole = UserRole.Admin;
                 }
+                else if (ur == 2)
+                {
+                    u.UserRole = UserRole.Customer;
+                }
+                foreach (User item in userlist)
+                {
+                    if (item.UserId == u.UserId)
+                    {
+                        item.UserName = u.UserName;
+                        item.UserPassword = u.UserPassword;
+                        item.UserRole = u.UserRole;
+                        Console.WriteLine("User Updated Successfully.....!!!");
+                        break;
+                    }
+                }
+                foreach (UserAccount item in acclist)
+                {
+                    if (item.UserId == u.UserId)
+                    {
+                        item.Name = u.UserName;
+                        break;
+                    }
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
         public void DeleteUser()
         {
-            Console.WriteLine("Enter Id to Delete");
-            int id = Convert.ToInt32(Console.ReadLine());
-            foreach (User item in userlist)
+            try
             {
-                if (item.UserId == id)
+                Console.WriteLine("Enter Id to Delete");
+                int id = Convert.ToInt32(Console.ReadLine());
+                foreach (User item in userlist)
                 {
-                    userlist.Remove(item);
-                    Console.WriteLine("User Details Deleted...!!!");
-                    break;
+                    if (item.UserId == id)
+                    {
+                        userlist.Remove(item);
+                        Console.WriteLine("User Details Deleted...!!!");
+                        break;
+                    }
                 }
-            }
-            foreach (UserAccount item in acclist)
+                foreach (UserAccount item in acclist)
+                {
+                    if (item.UserId == id)
+                    {
+                        acclist.Remove(item);
+                        Console.WriteLine("User Account Deleted...!!!");
+                        break;
+                    }
+                }
+            }catch(Exception e)
             {
-                if (item.UserId == id)
-                {
-                    acclist.Remove(item);
-                    Console.WriteLine("User Account Deleted...!!!");
-                    break;
-                }
+                Console.WriteLine(e.Message);
             }
 
         }
